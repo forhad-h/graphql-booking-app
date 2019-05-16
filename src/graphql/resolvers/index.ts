@@ -129,18 +129,38 @@ export default {
     }
   },
   bookEvent: async (args: BookingInput) => {
-    const fetchEvent = await Event.findOne({ _id: args.eventId });
-    const booking = new Booking({
-      event: fetchEvent,
-      user: "5cdd3c6052f5aa25c54ec5cb"
-    });
-    const result = await booking.save();
-    return {
-      ...result._doc,
-      event: singleEvent.bind({}, booking._doc.event),
-      user: user.bind({}, booking._doc.user),
-      createdAt: new Date(result._doc.createdAt).toISOString(),
-      updatedAt: new Date(result._doc.updatedAt).toISOString()
-    };
+    try {
+      const fetchEvent = await Event.findOne({ _id: args.eventId });
+      const booking = new Booking({
+        event: fetchEvent,
+        user: "5cdd3c6052f5aa25c54ec5cb"
+      });
+      const result = await booking.save();
+      return {
+        ...result._doc,
+        event: singleEvent.bind({}, booking._doc.event),
+        user: user.bind({}, booking._doc.user),
+        createdAt: new Date(result._doc.createdAt).toISOString(),
+        updatedAt: new Date(result._doc.updatedAt).toISOString()
+      };
+    } catch (err) {
+      dbErr(err);
+      return err;
+    }
+  },
+  cancelBooking: async (args: BookingInput) => {
+    try {
+      const booking = await Booking.findById(args.bookingId).populate("event");
+      if (!booking) throw new Error("Booking not found for delete");
+      const event = {
+        ...booking.event._doc,
+        creator: user.bind({}, booking.event._doc.creator)
+      };
+      await Booking.findByIdAndDelete(args.bookingId);
+      return event;
+    } catch (err) {
+      dbErr(err);
+      return err;
+    }
   }
 };
