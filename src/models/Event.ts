@@ -16,6 +16,9 @@ export type EventModel = {
   date: string;
   creator: Types.ObjectId;
 };
+export type EventDocModel = {
+  _doc: EventModel;
+};
 
 const eventSchema = new Schema({
   title: {
@@ -40,4 +43,4 @@ const eventSchema = new Schema({
   }
 });
 
-export default model<Document & { _doc: EventModel }>("Event", eventSchema);
+export default model<Document & EventDocModel>("Event", eventSchema);

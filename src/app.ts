@@ -5,10 +5,13 @@ import graphqlHttp from "express-graphql";
 
 import graphQLSchema from "./graphql/schema/index";
 import graphQLResolvers from "./graphql/resolvers/index";
+import isAuth from "./middleware/isAuth";
 
 const app = express();
 
 app.use(bodyParser.json());
+
+app.use(isAuth);
 
 app.use(
   "/graphql",

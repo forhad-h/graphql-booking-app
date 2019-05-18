@@ -15,6 +15,11 @@ export default buildSchema(`
           password: String
           createdEvents: [Event!]
         }
+        type LoginData {
+            userId: ID!
+            token: String!
+            tokenExpiration: Int!
+        }
         type Booking {
             _id: ID!
             event: Event!
@@ -37,6 +42,7 @@ export default buildSchema(`
         type RootQuery {
             events: [Event!]!
             bookings: [Booking!]!
+            login(email: String!, password: String!): LoginData!
         }
         type RootMutation {
             createEvent(eventInput: EventInput): Event

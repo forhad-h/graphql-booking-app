@@ -14,6 +14,15 @@ export type UserModel = {
   createdEvents: Array<Types.ObjectId>;
 };
 
+export type UserDocModel = {
+  _doc: UserModel;
+};
+
+export type LoginInput = {
+  email: string;
+  password: string;
+};
+
 const userSchema = new Schema({
   email: {
     type: String,
@@ -31,4 +40,4 @@ const userSchema = new Schema({
   ]
 });
 
-export default model<Document & UserModel & { _doc: UserModel }>("User", userSchema);
+export default model<Document & UserModel & UserDocModel>("User", userSchema);

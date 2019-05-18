@@ -14,6 +14,10 @@ export type BookingModel = {
   updatedAt: string;
 };
 
+export type BookingDocModel = {
+  _doc: BookingModel
+}
+
 type BookingRefModel = {
   event: { _doc: EventModel };
   user: { _doc: UserModel };
@@ -37,7 +41,7 @@ const bookingSchema = new Schema(
   }
 );
 
-export default model<Document & BookingRefModel & { _doc: BookingModel }>(
+export default model<Document & BookingRefModel & BookingDocModel>(
   "Booking",
   bookingSchema
 );
