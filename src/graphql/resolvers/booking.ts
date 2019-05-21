@@ -8,7 +8,7 @@ export default {
   bookings: async (args: null, req: Request) => {
     if (!req.isAuth) throw new Error("User not Authenticated!");
     try {
-      const bookings = await Booking.find().exec();
+      const bookings = await Booking.find({ user: req.userId }).exec();
       if (!bookings) throw new Error("Booking not found");
       return bookings.map(booking => {
         return transformBooking(booking);

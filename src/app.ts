@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import bodyParser from "body-parser";
 import { connect as mongoConnect } from "mongoose";
 import graphqlHttp from "express-graphql";
@@ -6,10 +6,13 @@ import graphqlHttp from "express-graphql";
 import graphQLSchema from "./graphql/schema/index";
 import graphQLResolvers from "./graphql/resolvers/index";
 import isAuth from "./middleware/isAuth";
+import headers from "./middleware/headers";
 
 const app = express();
 
 app.use(bodyParser.json());
+
+app.use(headers);
 
 app.use(isAuth);
 

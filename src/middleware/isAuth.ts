@@ -17,7 +17,8 @@ type AuthStatus = {
 const auth = (req: Request, next: NextFunction, authStatus: AuthStatus) => {
   if (
     authStatus.msg !== "success" &&
-    Object.keys(!authStatus.dToken).length == 0
+    (Object.keys(!authStatus.dToken).length == 0 &&
+      authStatus.dToken.constructor === Object)
   ) {
     tokenErr(authStatus.msg);
     req.isAuth = false;

@@ -1,0 +1,45 @@
+@import "../../sass/variables";
+
+.main-navigation {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: $app-bar-height;
+  background-color: $color-base;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+
+  &__logo {
+    h1 {
+      margin: 0;
+      font-size: 1.55rem;
+      color: rgb(255, 218, 218);
+    }
+  }
+  &__items {
+    margin-left: auto;
+    ul {
+      padding: 0;
+      margin: 0;
+      display: flex;
+      list-style: none;
+      display: flex;
+      align-items: center;
+    }
+    li {
+      margin: 0 1rem;
+    }
+    a {
+      text-decoration: none;
+      color: #eee;
+      transition: 0.25s linear;
+      &:hover,
+      &:active,
+      &.active {
+        color: rgb(255, 220, 155);
+      }
+    }
+  }
+}
