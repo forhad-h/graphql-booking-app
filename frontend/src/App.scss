@@ -1,4 +1,9 @@
 @import "./sass/variables";
+.auth-form {
+    width: 25rem;
+    max-width: 80%;
+    margin: 7rem auto;
+}
 .main-content {
   margin-top: calc(#{$app-bar-height} + 1.5rem);
 }

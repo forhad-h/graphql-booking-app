@@ -2,29 +2,35 @@ import { GRAPHQL_END_POINT } from "../aux/config";
 export default (_this, data) => {
   let requestBody = {
     query: `
-            query {
-                login(email: "${data.email}", password: "${data.password}"){
+            query Login($email: String!, $password: String!){
+                login(email: $email, password: $password){
                     userId
                     token
                     tokenExpiration
                 }
             }
-      `
+      `,
+    variables: {
+      email: data.email,
+      password: data.password
+    }
   };
 
   if (!_this.state.isLoginForm) {
     requestBody = {
       query: `
-            mutation {
-                createUser(userInput: {email: "${data.email}", password: "${
-        data.password
-      }"}) {
+            mutation SignUp($email: String!, $password: String!) {
+                createUser(userInput: {email: $email, password: $password}) {
                     _id
                     email
                     password
                 }
             }
-        `
+        `,
+      variables: {
+        email: data.email,
+        password: data.password
+      }
     };
   }
 

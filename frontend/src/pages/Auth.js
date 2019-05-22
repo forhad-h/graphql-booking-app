@@ -2,7 +2,6 @@ import React, { Component, createRef } from "react";
 
 import AuthContext from "../context/authContext";
 import authRequest from "../graphql/authRequest";
-import "./Auth.scss";
 
 class AuthPage extends Component {
   constructor(props) {

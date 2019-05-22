@@ -3,12 +3,12 @@ import { GRAPHQL_END_POINT } from "../aux/config";
 export default (_parent, data) => {
   const requestBody = {
     query: `
-            mutation {
+            mutation CreateEvent($title: String!, $description: String!, $price: Float!, $date: String!){
                 createEvent(eventInput: {
-                    title: "${data.title}",
-                    description: "${data.description}",
-                    price: ${data.price},
-                    date: "${data.date}"
+                    title: $title,
+                    description: $description,
+                    price: $price,
+                    date: $date
                 }){
                     _id
                     title
@@ -20,7 +20,13 @@ export default (_parent, data) => {
                     }
                 }
             }
-        `
+        `,
+    variables: {
+      title: data.title,
+      description: data.description,
+      price: data.price,
+      date: data.date
+    }
   };
 
   const fetchOptions = {

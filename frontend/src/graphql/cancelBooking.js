@@ -4,13 +4,16 @@ export default (_this, data) => {
   _this.setState({ isLoading: true });
   const requestBody = {
     query: `
-            mutation {
-                cancelBooking(bookingId: "${data.id}"){
+            mutation CancelBooking($id: ID!) {
+                cancelBooking(bookingId: $id){
                     _id
                     title
                 }
             }
-        `
+        `,
+    variables: {
+      id: data.id
+    }
   };
 
   const fetchOptions = {

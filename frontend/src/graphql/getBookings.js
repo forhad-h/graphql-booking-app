@@ -12,6 +12,7 @@ export default (_this, data) => {
                         _id
                         title
                         date
+                        price
                     }
                 }
             }

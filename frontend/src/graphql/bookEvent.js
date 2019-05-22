@@ -3,14 +3,17 @@ import { GRAPHQL_END_POINT } from "../aux/config";
 export default data => {
   const requestBody = {
     query: `
-            mutation {
-                bookEvent(eventId: "${data.eventId}"){
+            mutation BookEvent($eventId: ID!) {
+                bookEvent(eventId: $eventId){
                     _id
                     createdAt
                     updatedAt
                 }
             }
-        `
+        `,
+    variables: {
+      eventId: data.eventId
+    }
   };
 
   const fetchOptions = {

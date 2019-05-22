@@ -1,0 +1,25 @@
+@import "../../../sass/variables";
+.bookings-control {
+  text-align: center;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  button {
+    font-weight: 700;
+    font-size: 1.2rem;
+    border: none;
+    background: transparent;
+    color: #222;
+    padding: 0.25rem 3rem;
+    margin: 0 0.25rem;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    &.active {
+      color: $color-base;
+      border-bottom-color: $color-base;
+    }
+    &:active,
+    &:focus {
+      outline: 0 none;
+    }
+  }
+}

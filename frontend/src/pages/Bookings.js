@@ -4,14 +4,17 @@ import AuthContext from "../context/authContext";
 import getBookings from "../graphql/getBookings";
 import cancelBooking from "../graphql/cancelBooking";
 import Spinner from "../components/Spinner/Spinner";
-import "./Bookings.scss";
+import BookingList from "../components/Booking/BookingList/BookingList";
+import BookingsControl from "../components/Booking/BookingsControl/BookingsControl";
+import BookingChart from "../components/Booking/BookingChart/BookingChart";
 
 class BookingPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isLoading: false,
-      bookings: []
+      bookings: [],
+      outputType: "list"
     };
   }
 
@@ -33,31 +36,32 @@ class BookingPage extends React.Component {
     });
   };
 
+  outputTypeHandler = outputType => this.setState({ outputType });
+
   render() {
-    const bookingList = this.state.bookings.map(booking => {
-      return (
-        <li key={booking._id} className="bookings__item">
-          <div className="bookings__item-data">
-            {booking.event.title} -{" "}
-            {new Date(booking.createdAt).toLocaleDateString()}
+    let content = <Spinner />;
+    if (!this.state.isLoading) {
+      content = (
+        <>
+          <BookingsControl
+            outputTypeHandler={this.outputTypeHandler}
+            activeOutputType={this.state.outputType}
+          />
+          <div>
+            {this.state.outputType === "list" ? (
+              <BookingList
+                bookings={this.state.bookings}
+                cancelBooking={this.cancelBookingHandler}
+              />
+            ) : (
+              <BookingChart bookings={this.state.bookings} />
+            )}
           </div>
-          <div className="bookings__item-actions">
-            <button
-              type="button"
-              className="btn small"
-              onClick={this.cancelBookingHandler.bind(this, booking._id)}
-            >
-              Cancel
-            </button>
-          </div>
-        </li>
+        </>
       );
-    });
-    return this.state.isLoading ? (
-      <Spinner />
-    ) : (
-      <ul className="bookings__list">{bookingList}</ul>
-    );
+    }
+
+    return <>{content}</>;
   }
 }
 

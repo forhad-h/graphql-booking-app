@@ -2,7 +2,8 @@ import { UserDocModel } from "../../../models/User";
 import { EventDocModel } from "../../../models/Event";
 import { BookingDocModel } from "../../../models/Booking";
 import { dateToString } from "../../../helpers/date";
-import { user, events, singleEvent } from "./relational";
+import { user, singleEvent } from "./relational";
+import { eventLoader } from "./relational";
 
 export const transformEvent = (event: EventDocModel) => {
   return {
@@ -16,7 +17,7 @@ export const transformUser = (user: UserDocModel) => {
   return {
     ...user._doc,
     password: null,
-    createdEvents: events.bind({}, user._doc.createdEvents)
+    createdEvents: () => eventLoader.loadMany(user._doc.createdEvents)
   };
 };
 

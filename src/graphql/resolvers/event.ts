@@ -8,9 +8,7 @@ import { user } from "./helpers/relational";
 
 export default {
   events: async () => {
-    const events = await Event.find()
-      .populate("creator")
-      .exec();
+    const events = await Event.find().exec();
 
     return events.map(event => {
       return transformEvent(event);
